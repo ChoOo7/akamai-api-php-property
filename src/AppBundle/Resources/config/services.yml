@@ -1,0 +1,19 @@
+parameters: 
+  
+services: 
+  akamai.rule: 
+      arguments: 
+      class: AppBundle\Service\AkamaiRule
+    
+  akamai.property: 
+      arguments: 
+      class: AppBundle\Service\AkamaiProperty
+    
+  akamai.group: 
+      arguments: 
+      class: AppBundle\Service\AkamaiGroup
+    
+  akamai.version: 
+      arguments: 
+      class: AppBundle\Service\AkamaiVersion
+    
