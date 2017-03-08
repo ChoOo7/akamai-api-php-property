@@ -86,18 +86,20 @@ class UpdateAllPropertiesCommand extends ContainerAwareCommand
                         $newVersionRule = $ruleService->getRule($contract, $groupInfo['groupId'], $propertyInfo['propertyId'], $newVersion);
                         $newVersionRuleEtag = $newVersionRule['etag'];
                         
-                        $this->output->writeln('Etag : '.$newVersionRuleEtag);
-                        
+                        //$this->output->writeln('Etag : '.$newVersionRuleEtag);                        
 
                         $this->output->writeln('Editing property');
                         $ruleResult = $ruleService->setRule($contract, $groupInfo['groupId'], $propertyInfo['propertyId'], $newVersion, $newVersionRuleEtag, $ruleEdited['rules']);
 
+                        $this->output->writeln('Activating on STAGING');
+                        $propertyService->activateProperty($contract, $groupInfo['groupId'], $propertyInfo['propertyId'], $newVersion, 'STAGING');
+                        $this->output->writeln('Activating on STAGING Done');
+
                         $this->output->writeln('Activating PRODUCTION');
                         $actRes = $propertyService->activateProperty($contract, $groupInfo['groupId'], $propertyInfo['propertyId'], $newVersion, 'PRODUCTION');
+                        $this->output->writeln('Activating on PRODUCTIOn Done');
 
-                        $this->output->writeln('Activating STAGING');
-                        $propertyService->activateProperty($contract, $groupInfo['groupId'], $propertyInfo['propertyId'], $newVersion, 'STAGING');
-                        
+
                     }else{
                         $this->output->writeln('Rule '.$propertyInfo['propertyName'].' untouched');
                     }
